@@ -64,6 +64,8 @@ def new(hostname = "", vhost_name = "", dir_name = ""):
     </Directory>
 </VirtualHost>"""
 
+    messages.success("Created a archive with following lines in /etc/apache2/sites-available/:\n\n" + config_vhost)
+
 
     arq = open(("/etc/apache2/sites-available/" + vhost_name + ".conf"), 'w+')
     arq.writelines(config_vhost)
@@ -74,16 +76,21 @@ def new(hostname = "", vhost_name = "", dir_name = ""):
 
     subprocess.getoutput(("a2ensite "+ vhost_name +".conf"))
 
-    hosts = hostname + "   " + vhost_name + " " + server_config
-    messages.process(("Updating hosts file with " + (vhost_name + " and " + server_config)+"..."))
+    
+
+    hosts = hostname + " " + server_config
+    messages.success( "Added following lines in /etc/hosts:\n\n" + hosts)
+   
+    messages.process(("Updating hosts file with " + server_config +" config..."))
     subprocess.getoutput(("echo '" + hosts + "' >> /etc/hosts"))
     messages.process(("Restarting apache2..."))
     subprocess.getoutput("service apache2 restart")
     subprocess.getoutput("systemctl restart apache2")
-    messages.success("Virtual host created successfully! \n")
-    messages.info(("For access use " + vhost_name + " or " + server_config +" in your browser \n"))
+    messages.success("\n\n\n\tSUCCESS!\t Virtual host created successfully! \n\n\n")
+    messages.info(("See a log scrolling up.\nFor access use " + server_config +" in your browser. \n"))
 
-    input("Press any key to continue... ")
+
+    input("Tank you to use this program, git a star the project on Github!\n\nPress any key to continue... ")
     return 0
 
 def edit():
