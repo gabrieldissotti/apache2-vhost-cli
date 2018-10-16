@@ -136,7 +136,7 @@ def edit():
 
     if op != 'n':
         subprocess.getoutput(("rm " + env.CONFIG_DIR + edithost[1] + ".conf"))
-        if SITES_ENABLED != false:
+        if SITES_ENABLED != 0:
             subprocess.getoutput(("rm " + env.SITES_ENABLED + edithost[1] + ".conf"))
         f = open(env.HOSTS_FILE, 'r', encoding="utf8")
         lines = f.readlines()
@@ -189,7 +189,7 @@ def delete():
 
     if op != 'n':
         subprocess.getoutput(("rm " + env.CONFIG_DIR + edithost[1] + ".conf"))
-        if SITES_ENABLED != false:
+        if SITES_ENABLED != 0:
             subprocess.getoutput(("rm " + env.SITES_ENABLED + edithost[1] + ".conf"))
         f = open(env.HOSTS_FILE, 'r', encoding="utf8")
         lines = f.readlines()
