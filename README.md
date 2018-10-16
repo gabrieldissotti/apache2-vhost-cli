@@ -25,3 +25,7 @@ Enter in the sample directory with a terminal and run main.py as root.
 cd sample
 sudo python3 main.sh
 ```
+
+## Suport
+
+If you found a error or want give a sugestion, report on issue or send a email to gabriel.rodrigues@fatecitapetininga.edu.br
