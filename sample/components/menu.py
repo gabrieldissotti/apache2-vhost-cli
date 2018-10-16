@@ -4,9 +4,12 @@
 # Developed by: Gabriel Dissotti
 from termcolor import colored
 # Variables
-text = """ 1 - List Virtual Hosts \t4 - Delete a Virtual Host
- 2 - New Virtual Host   \t6 - Exit
- 3 - Edit a Virtual Host"""
+text = """ 1 - List \t\t\t\t\t    4 - Delete
+ 
+ 2 - New
+
+ 3 - Edit \t\t\t\t\t      6 - Exit
+ """
 div = '-=-' * 21
 
 # Colors

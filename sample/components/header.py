@@ -17,7 +17,7 @@ ver = colored(ver, 'green', attrs=['blink', 'bold'])
 def show():
     # Program
     print(div)
-    print("{0:^95}".format(title+ver))
+    print("{0:^100}".format(title+ver))
     print(div)
-    print("{0:^60}".format("Menu"))
+    print("{0:^65}".format("Menu"))
     print('\n')
