@@ -85,8 +85,7 @@ def new(hostname = "", vhost_name = "", dir_name = ""):
     messages.process(("Updating hosts file with " + server_config +" config..."))
     subprocess.getoutput(("echo '" + hosts + "' >> "+env.HOSTS_FILE+""))
     messages.process(("Restarting apache2..."))
-    subprocess.getoutput("service apache2 restart")
-    subprocess.getoutput("systemctl restart apache2")
+    subprocess.getoutput(env.COMMAND_RESTART_APACHE)
     messages.success("\n\n\n\tSUCCESS!\t Virtual host created successfully! \n\n\n")
     messages.info(("See a log scrolling up.\nFor access use " + server_config +" in your browser. \n"))
 
