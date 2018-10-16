@@ -3,6 +3,7 @@
 # for: Linux(Debian distros)
 # Developed by: Gabriel Dissotti
 import os
+from config import env
 from termcolor import colored
 from helpers import prefill, messages
 import subprocess
@@ -19,7 +20,7 @@ text_hostname = colored(text_hostname , 'cyan', attrs=['blink'])
 text_new_vhost = colored(text_new_vhost,'cyan', attrs=['blink'])
 
 def getListVhosts():
-    arq = open('/etc/hosts', 'r', encoding="utf8")
+    arq = open(env.HOSTS_FILE, 'r', encoding="utf8")
     hosts = arq.readlines()
     print(colored("\nNº   IP\t\tNames", 'white', attrs=['blink','bold']))
     for i  in range(len(hosts)):
@@ -64,10 +65,10 @@ def new(hostname = "", vhost_name = "", dir_name = ""):
     </Directory>
 </VirtualHost>"""
 
-    messages.success("Created a archive with following lines in /etc/apache2/sites-available/:\n\n" + config_vhost)
+    messages.success("Created a archive with following lines in "+env.CONFIG_DIR+":\n\n" + config_vhost)
 
 
-    arq = open(("/etc/apache2/sites-available/" + vhost_name + ".conf"), 'w+')
+    arq = open((env.CONFIG_DIR + vhost_name + ".conf"), 'w+')
     arq.writelines(config_vhost)
     arq.close()
 
@@ -79,10 +80,10 @@ def new(hostname = "", vhost_name = "", dir_name = ""):
     
 
     hosts = hostname + " " + server_config
-    messages.success( "Added following lines in /etc/hosts:\n\n" + hosts)
+    messages.success( "Added following lines in "+env.HOSTS_FILE+":\n\n" + hosts)
    
     messages.process(("Updating hosts file with " + server_config +" config..."))
-    subprocess.getoutput(("echo '" + hosts + "' >> /etc/hosts"))
+    subprocess.getoutput(("echo '" + hosts + "' >> "+env.HOSTS_FILE+""))
     messages.process(("Restarting apache2..."))
     subprocess.getoutput("service apache2 restart")
     subprocess.getoutput("systemctl restart apache2")
@@ -97,7 +98,7 @@ def edit():
     os.system('clear')
     messages.title(">> Edit Virtual Hosts<<")
     messages.question("\nChoose a virtual host to edit by your number: ")
-    db = open('/etc/hosts', 'r', encoding="utf8")
+    db = open(env.HOSTS_FILE, 'r', encoding="utf8")
     db = db.readlines()
     getListVhosts()
     option = input("\nEdit nº: ")
@@ -118,13 +119,13 @@ def edit():
 
     editdirname = ""
     try:
-        arq = open(("/etc/apache2/sites-available/" + edithost[1] + ".conf"), 'r')
+        arq = open((env.CONFIG_DIR + edithost[1] + ".conf"), 'r')
         words = arq.read().split()
         editdirname = words.index("DocumentRoot")
         editdirname = words[(editdirname+1)]
         arq.close()
     except IOError:
-       messages.atention("File not found: /etc/apache2/sites-available/" + edithost[1] + ".conf")
+       messages.atention("File not found: "+env.CONFIG_DIR+"" + edithost[1] + ".conf")
 
     hostname = str(prefill.input_with_prefill(text_hostname,edithostname))
     vhost_name = str(prefill.input_with_prefill(text_new_vhost,editvhostname))
@@ -134,12 +135,12 @@ def edit():
     op = input().strip().lower()
 
     if op != 'n':
-        subprocess.getoutput(("rm " + "/etc/apache2/sites-available/" + edithost[1] + ".conf"))
-        subprocess.getoutput(("rm " + "/etc/apache2/sites-enabled/" + edithost[1] + ".conf"))
-        f = open('/etc/hosts', 'r', encoding="utf8")
+        subprocess.getoutput(("rm " + env.CONFIG_DIR + edithost[1] + ".conf"))
+        subprocess.getoutput(("rm " + env.SITES_ENABLED + edithost[1] + ".conf"))
+        f = open(env.HOSTS_FILE, 'r', encoding="utf8")
         lines = f.readlines()
         f.close()
-        f = open('/etc/hosts', 'w', encoding="utf8")
+        f = open(env.HOSTS_FILE, 'w', encoding="utf8")
         for line in lines:
             if line!=db[option]:
                 f.write(line)
@@ -161,7 +162,7 @@ def delete():
     option = int(option)-1
     os.system('clear')
 
-    db = open('/etc/hosts', 'r', encoding="utf8")
+    db = open(env.HOSTS_FILE, 'r', encoding="utf8")
     db = db.readlines()
     edithost = db[option]
     messages.question("Remove Virtual Host:")
@@ -175,23 +176,23 @@ def delete():
         editvhostname = edithost[2]
 
     try:
-        arq = open(("/etc/apache2/sites-available/" + edithost[1] + ".conf"), 'r')
+        arq = open((env.CONFIG_DIR + edithost[1] + ".conf"), 'r')
         words = arq.read().split()
         editdirname = words.index("DocumentRoot")
         editdirname = words[(editdirname+1)]
         arq.close()
     except IOError:
-       messages.atention("File not found: /etc/apache2/sites-available/" + edithost[1] + ".conf \n")
+       messages.atention("File not found: "+env.CONFIG_DIR+ edithost[1] + ".conf \n")
     messages.question("Are you sure to delete the virtual host? Y/n")
     op = input().strip().lower()
 
     if op != 'n':
-        subprocess.getoutput(("rm " + "/etc/apache2/sites-available/" + edithost[1] + ".conf"))
-        subprocess.getoutput(("rm " + "/etc/apache2/sites-enabled/" + edithost[1] + ".conf"))
-        f = open('/etc/hosts', 'r', encoding="utf8")
+        subprocess.getoutput(("rm " + env.CONFIG_DIR + edithost[1] + ".conf"))
+        subprocess.getoutput(("rm " + env.SITES_ENABLED + edithost[1] + ".conf"))
+        f = open(env.HOSTS_FILE, 'r', encoding="utf8")
         lines = f.readlines()
         f.close()
-        f = open('/etc/hosts', 'w', encoding="utf8")
+        f = open(env.HOSTS_FILE, 'w', encoding="utf8")
         for line in lines:
             if line!=db[option]:
                 f.write(line)
