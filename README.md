@@ -14,6 +14,10 @@ pip3 install termcolor
 > make sure you're root, because the python dependencies are installed for user and you must run this program with root.
 
 
+## Configure
+
+Edit variables on sample/config/env.py file to this program work accord your system 
+
 ## Run it
 
 Enter in the sample directory with a terminal and run main.py as root.
