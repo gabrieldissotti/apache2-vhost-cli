@@ -19,7 +19,7 @@ def main():
     os.system('clear')
     header.show()
     menu.show()
-    option = input("Your option: ")
+    option = input("Your NUMBER option: ")
 
     if not option.isnumeric():
         main()
