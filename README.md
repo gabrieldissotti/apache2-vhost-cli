@@ -1,7 +1,14 @@
 # virtual-host-manager
 Virtual host manager for Linux
 
-## Develop dependêncies
+## Get started
+
+- Install all dependencies.
+- run the setup.sh as root
+- open a new bash and run 'vhost'
+
+
+## Dependêncies
 
 - Python
 - python3-pip
