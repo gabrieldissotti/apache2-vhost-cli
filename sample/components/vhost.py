@@ -39,9 +39,10 @@ def new(hostname = "", vhost_name = "", dir_name = ""):
         messages.title(">> Creating Virtual Hosts <<")
         print("\n")
         hostname = str(prefill.input_with_prefill(text_hostname,"127.0.0.1"))
-        dir_name = str(prefill.input_with_prefill(text_dir_name,"/var/www/"))
+        if(hostname == 'localhost' or hostname == '127.0.0.1'):
+            dir_name = str(prefill.input_with_prefill(text_dir_name,"/var/www/"))
         vhost_name = str(prefill.input_with_prefill((example_new_vhost + text_new_vhost),"dev."))
-    if (not vhost_name or not dir_name or not hostname):
+    if ((not vhost_name or not dir_name or not hostname) and (hostname == 'localhost' or hostname == '127.0.0.1')):
         messages.error("Inform the data correctly!")
         new()
         return 0
@@ -67,15 +68,15 @@ def new(hostname = "", vhost_name = "", dir_name = ""):
 
     messages.success("Created a archive with following lines in "+env.CONFIG_DIR+":\n\n" + config_vhost)
 
+    if(hostname == 'localhost' or hostname == '127.0.0.1'):
+        arq = open((env.CONFIG_DIR + vhost_name + ".conf"), 'w+')
+        arq.writelines(config_vhost)
+        arq.close()
 
-    arq = open((env.CONFIG_DIR + vhost_name + ".conf"), 'w+')
-    arq.writelines(config_vhost)
-    arq.close()
-
-    messages.process(("Enabling virtual host " + server_config + "..."))
+        messages.process(("Enabling virtual host " + server_config + "..."))
 
 
-    subprocess.getoutput(("a2ensite "+ vhost_name +".conf"))
+        subprocess.getoutput(("a2ensite "+ vhost_name +".conf"))
 
     
 
