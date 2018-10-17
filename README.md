@@ -3,35 +3,9 @@ Virtual host manager for Linux
 
 ## Get started
 
-- Install all dependencies.
+- Edit variables on sample/config/env.py file to this program work accord your system 
 - run the setup.sh as root
-- open a new bash and run 'vhost'
-
-
-## Dependêncies
-
-- Python
-- python3-pip
-
-Install termcolor dependency:
-
-```sh
-pip3 install termcolor
-```
-> make sure you're root, because the python dependencies are installed for user and you must run this program with root.
-
-
-## Configure
-
-Edit variables on sample/config/env.py file to this program work accord your system 
-
-## Run it
-
-Enter in the sample directory with a terminal and run main.py as root.
-```sh
-cd sample
-sudo python3 main.sh
-```
+- open a new bash after install and run vhost
 
 ## Suport
 
