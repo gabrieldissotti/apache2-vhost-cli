@@ -9,4 +9,4 @@ Virtual host manager for Linux
 
 ## Suport
 
-If you found a error or want give a sugestion, report on issue or send a email to gabriel.rodrigues@fatecitapetininga.edu.br
+If you found a error or want give a sugestion, report on issue or send a email to gabriel.rodrigues31@fatecitapetininga.edu.br
